@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display JSON Data</title>
+  <style>
+    h1{
+        text-align: center;
+    }
+    h2{
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="title">University Information</h1>
+
+  <div id="universityInfo"></div>
+
+  <script>
+
+            fetch('Array.json')
+            .then(res=>res.json())
+            .then(res=>{
+                    console.log("res", res)
+               const universityInfo  = document.getElementById("universityInfo");
+
+
+               universityInfo.innerHTML +=`<h2>${res.university.name}</h2>`
+               universityInfo.innerHTML +=`<h2>${res.university.location}</h2>`
+
+               universityInfo.innerHTML += "<h3>Students</h3>";
+
+               for(var i=0; i<res.university.students.length;i++){
+                  var  student = res.university.students[i]
+                  console.log(student)
+                   universityInfo.innerHTML +=`<p>${student.name}</p>`
+                   universityInfo.innerHTML +=`<p>${student.age}</p>`
+
+                   universityInfo.innerHTML += "<p>Hobbies:</p>";
+                   universityInfo.innerHTML += "<ul>";
+                    for (var key in student.details.hobby) {
+                        universityInfo.innerHTML += "<li>" + key + ": " + student.details.hobby[key] + "</li>";
+                    }
+
+                                        if (student.details.hobby.books) {
+                                            universityInfo.innerHTML += "<li>Books:</li>";
+                                            universityInfo.innerHTML += "<ul>";
+                                for (var bookKey in student.details.hobby.books) {
+                                    universityInfo.innerHTML += "<li>" + bookKey + ": " + student.details.hobby.books[bookKey] + "</li>";
+                                }
+                                universituniversityInfoyInfoDiv.innerHTML += "</ul>";
+                            }
+                    universityInfo.innerHTML += "</ul>";
+                    
+                    universityInfo.innerHTML += "<p>Page: " + student.details.page + "</p>"; // Assuming 'page' is under 'details'
+
+                    universityInfo.innerHTML += `<p>Roll Number:${student.details.roll_number} </p>`;
+
+                    universityInfo.innerHTML += "<hr>";
+
+                    }
+            })
+            .catch(error => console.error('Error fetching JSON:', error));
+
+
+     </script>
+
+</body>
+</html>
